@@ -56,20 +56,20 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 text-center">
+      <div className="relative z-10 h-full flex flex-col items-center justify-center px-5 pt-24 pb-16 text-center sm:px-6 sm:pt-0 sm:pb-0">
         <div className="max-w-5xl mx-auto">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8"
+            className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 mb-5 backdrop-blur-md sm:px-5 sm:py-2.5 sm:mb-8"
           >
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500" />
             </span>
-            <span className="text-white/90 text-sm font-medium tracking-wide">
+            <span className="text-white/90 text-xs font-medium tracking-wide sm:text-sm">
               Active in Edo State
             </span>
           </motion.div>
@@ -79,7 +79,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl text-white leading-[1.05] tracking-tight"
+            className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl text-white leading-[1.08] tracking-tight sm:leading-[1.05]"
           >
             Every Child Deserves
             <br />
@@ -91,7 +91,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-8 text-lg sm:text-xl md:text-2xl text-white/70 max-w-2xl mx-auto leading-relaxed font-light"
+            className="mt-5 text-base sm:mt-8 sm:text-xl md:text-2xl text-white/70 max-w-2xl mx-auto leading-relaxed font-light"
           >
             Make A Child Smile Initiative provides school uniforms for children
             in public schools with the help of caring supporters.
@@ -102,18 +102,18 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.1 }}
-            className="mt-12 flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="mt-8 flex flex-col sm:mt-12 sm:flex-row gap-3 sm:gap-4 justify-center items-center"
           >
             <a
               href="#support"
-              className="group inline-flex items-center gap-3 px-10 py-4 bg-white text-black rounded-full text-lg font-medium hover:bg-cream-100 transition-all duration-300 hover:shadow-lg hover:shadow-white/10 hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-3 px-7 py-3 bg-white text-black rounded-full text-base font-medium hover:bg-cream-100 transition-all duration-300 hover:shadow-lg hover:shadow-white/10 hover:-translate-y-0.5 sm:px-10 sm:py-4 sm:text-lg"
             >
               <Heart className="w-5 h-5 group-hover:scale-110 transition-transform" />
               Support A Child
             </a>
             <a
               href="#impact"
-              className="inline-flex items-center gap-2 px-10 py-4 border-2 border-white/30 text-white rounded-full text-lg font-medium hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm"
+              className="inline-flex items-center gap-2 px-7 py-3 border-2 border-white/30 text-white rounded-full text-base font-medium hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm sm:px-10 sm:py-4 sm:text-lg"
             >
               View Our Impact
             </a>
