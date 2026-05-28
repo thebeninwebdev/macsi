@@ -54,11 +54,11 @@ export function Support() {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
-            className="group inline-flex items-center gap-4 px-10 py-5 bg-[#25D366] text-white rounded-full text-lg font-semibold shadow-2xl shadow-[#25D366]/30 hover:shadow-[#25D366]/50 transition-all duration-300"
+            className="group inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-4 text-base font-semibold leading-tight text-white shadow-2xl shadow-[#25D366]/30 transition-all duration-300 hover:shadow-[#25D366]/50 sm:w-auto sm:max-w-none sm:gap-4 sm:px-10 sm:py-5 sm:text-lg"
           >
-            <MessageCircle className="w-7 h-7" />
-            <span>Send A Message To Support</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <MessageCircle className="h-6 w-6 shrink-0 sm:h-7 sm:w-7" />
+            <span className="min-w-0 text-center">Send A Message To Support</span>
+            <ArrowRight className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1" />
           </motion.a>
         </FadeIn>
 

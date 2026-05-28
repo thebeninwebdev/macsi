@@ -26,6 +26,14 @@ export function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <>
       <motion.header
@@ -91,6 +99,8 @@ export function Navigation() {
               "lg:hidden p-2 rounded-full transition-colors",
               isScrolled ? "text-black" : "text-white"
             )}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -104,9 +114,9 @@ export function Navigation() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl lg:hidden"
+            className="fixed inset-x-0 bottom-0 top-0 z-40 overflow-y-auto overscroll-contain bg-black/95 backdrop-blur-xl lg:hidden"
           >
-            <div className="flex flex-col items-center justify-center h-full gap-8">
+            <nav className="flex min-h-full flex-col items-center justify-center gap-6 px-6 pb-10 pt-28 sm:gap-8 sm:pt-32">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -115,7 +125,7 @@ export function Navigation() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-2xl font-serif text-white hover:text-cream-300 transition-colors"
+                  className="text-center font-serif text-2xl text-white transition-colors hover:text-cream-300"
                 >
                   {link.label}
                 </motion.a>
@@ -126,11 +136,11 @@ export function Navigation() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6 }}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="mt-4 px-8 py-3 bg-white text-black rounded-full text-lg font-medium"
+                className="mt-2 rounded-full bg-white px-8 py-3 text-lg font-medium text-black"
               >
                 Support A Child
               </motion.a>
-            </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
