@@ -34,4 +34,4 @@ The homepage explains the mission, how donations work, local tailoring, real gal
 
 Browser checks for these journeys are in `.review/donation-journey.cjs` (uses the local Playwright installation and preview at port 3101).
 
-Development output uses .next-dev; production builds use .next-production, so preview and build processes can run independently.
+Development output uses .next-dev; production builds use .next, matching Vercel's expected output directory while keeping preview and build processes independent.
