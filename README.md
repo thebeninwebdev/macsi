@@ -1,4 +1,4 @@
-﻿# Make A Child Smile Initiative
+# Make A Child Smile Initiative
 
 The existing Next.js 14 App Router homepage, redesigned around school uniforms, dignity, and confidence. Uses Manrope, Framer Motion, and a green/cream/gold palette.
 
@@ -15,7 +15,7 @@ Validation: `npx tsc --noEmit`, `npm run lint`, and `npm run build`. Google Font
 - `public/images/placeholder-*.jpg` are approved temporary Unsplash images. Replace them with MACSI photographs. Source IDs: `1503676260728-1c00da094a0b`, `1509062522246-3755977927d7`, `1497486751825-1233686d5d80`.
 - `src/app/logo.png` is the existing legacy logo. The new green MACSI logo was not present in this checkout; replace this asset when available.
 - `src/lib/donations.ts` is the shared source for the existing uniform cost (NGN 4,500), donation presets, WhatsApp destination, contact details, impact counts and next-semester target. Preset amounts and messages are derived from the uniform cost.
-- `src/components/sections/gallery.tsx` holds the five MACSI gallery photographs and captions. Add entries there to grow the gallery.
+- `src/components/sections/Gallery.tsx` holds the five MACSI gallery photographs and captions. Add entries there to grow the gallery.
 - The donation FAQ describes the existing WhatsApp process and local uniform production. It does not claim a payment provider, registration status or allocation percentages.
 
 ## Interactions
