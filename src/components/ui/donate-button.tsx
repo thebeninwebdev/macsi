@@ -1,7 +1,7 @@
 "use client";
 
 import type { AnchorHTMLAttributes } from "react";
-import { Button } from "./button";
+import { Button } from "./Button";
 import { DONATION_DESTINATION } from "@/lib/donations";
 
 type DonateButtonProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "children"> & {
