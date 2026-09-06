@@ -1,0 +1,98 @@
+/* Mobile is an editorial composition, independent of the desktop collage. */
+body.font-sans { font-family: var(--font-manrope, Arial), Arial, sans-serif; }
+.hero-mobile-photo, .hero-mobile-action, .impact-photo { display: none; }
+.hero-line > .hero-letter { display: inline-block; }
+.hero-line { white-space: nowrap; padding-block: .1em; margin-block: -.1em; }
+.story-grid { column-gap: 100px; row-gap: 0; }
+.story-heading { grid-column: 2; grid-row: 1; align-self: end; }
+.story-heading h2 { font-size: clamp(2.6rem, 3.8vw, 3.7rem); }
+.story-visual { grid-column: 1; grid-row: 1 / 3; }
+.story-copy { grid-column: 2; grid-row: 2; align-self: start; }
+.marquee-photo { object-fit: cover; flex-shrink: 0; }
+@media (min-width: 768px) and (max-width: 1000px) {
+  .story-grid { column-gap: 45px; }
+  .story-heading h2 { font-size: 36px; }
+}
+@media (max-width: 767px) {
+  :root { --macsi-cream: #f5f7ed; --macsi-sand: #f2cfa5; }
+  .container { width: calc(100% - 40px); }
+  .nav-inner { height: 82px; border: 0; }
+  .nav-donate { display: none; }
+  .logo { width: 88px; padding: 3px 7px; }
+  .logo img { height: 55px; }
+  .menu-toggle { margin-left: auto; border: 0; width: 44px; height: 44px; }
+  .mobile-menu { max-height: calc(100dvh - 82px); }
+  .hero { padding: 24px 0 0; }
+  .hero-inner { width: 100%; }
+  .hero-inner > .eyebrow, .hero-composition, .hero-curve { display: none; }
+  .hero h1 { padding: 0 20px 34px; text-align: left; font-size: min(calc(10vw - 4px), 4.6rem); line-height: 1.02; letter-spacing: -.055em; }
+  .hero-mobile-photo { display: block; position: relative; width: 100%; aspect-ratio: 1.4; overflow: hidden; transform-origin: top center; }
+  .hero-mobile-photo img { object-fit: cover; object-position: center; }
+  .hero-bottom { margin: 0; padding: 38px 24px 48px; background: var(--macsi-sand); color: var(--macsi-green); display: flex; flex-direction: column; align-items: flex-start; gap: 26px; text-align: left; }
+  .hero-bottom p { color: var(--macsi-ink); font-size: 17px; line-height: 1.65; }
+  .hero-bottom .button { padding: 19px 23px; text-transform: uppercase; font-size: 12px; }
+  .hero-bottom .text-link { font-size: 14px; }
+  .hero-mobile-action { display: inline-flex; margin-top: 8px; }
+  .section { padding: 110px 0; }
+  h2, .story-heading h2, .support h2 { font-size: clamp(2.3rem, 10.7vw, 3.5rem); line-height: 1.03; }
+  .eyebrow { font-size: 11px; line-height: 1.6; color: #a86a00; margin-bottom: 27px; }
+  .body-copy, .heading-aside { font-size: 17px; line-height: 1.85; }
+  .mission-marquee { padding: 64px 0 56px; border: 0; }
+  .marquee-copy { font-size: clamp(28px, 8vw, 40px); text-transform: uppercase; gap: 18px; padding-right: 18px; }
+  .marquee-photo { width: 64px; height: 48px; }
+  .story { padding: 45px 0 130px; }
+  .story-grid { display: flex; flex-direction: column; gap: 0; align-items: stretch; }
+  .story-heading { margin-bottom: 105px; }
+  .story-visual { width: 100vw; max-width: none; margin: 0 calc(50% - 50vw); padding: 0; align-self: auto; }
+  .story-visual .image-frame { height: auto; aspect-ratio: 1.05; }
+  .story-seal { display: none; }
+  .photo-foot { padding: 20px; font-size: 11px; }
+  .story-copy { margin-top: 65px; }
+  .story-copy .body-copy { margin-top: 0; }
+  .action-list { margin: 45px 0; }
+  .action-row { padding: 25px 0; }
+  .action-row h3 { font-size: 23px; }
+  .action-row p { font-size: 16px; line-height: 1.7; }
+  .impact { background: var(--macsi-cream); color: var(--macsi-green); padding: 0; }
+  .impact .section-heading { margin-bottom: 90px; }
+  .impact .eyebrow { color: #a86a00; }
+  .impact .heading-aside { color: var(--macsi-muted); }
+  .section-heading { display: block; margin-bottom: 65px; }
+  .heading-aside { margin-top: 30px; max-width: none; }
+  .impact-photo { display: block; width: 100vw; margin-left: calc(50% - 50vw); aspect-ratio: 1.2; }
+  .stats-grid { width: 100vw; margin: 0 0 0 calc(50% - 50vw); padding: 75px 20px 85px; background: var(--macsi-sand); grid-template-columns: repeat(2,minmax(0,1fr)); gap: 65px 20px; }
+  .stat, .stat:first-child, .stat:nth-child(3), .stat:last-child { border: 0; padding: 0; }
+  .odometer { color: var(--macsi-green); font-size: clamp(2.6rem, 12vw, 4.5rem); flex-wrap: nowrap; }
+  .number-prefix { font-size: .48em; width: auto; height: auto; transform: none; }
+  .stat h3 { font-size: 16px; margin-top: 20px; }
+  .stat p { color: #4b5c50; font-size: 14px; line-height: 1.65; }
+  .gallery { padding: 140px 0; }
+  .gallery-grid { grid-template-columns: 1fr; gap: 90px; }
+  .gallery-feature, .gallery-secondary { width: 100vw; margin: 0 0 0 calc(50% - 50vw); }
+  .gallery-feature .image-frame { height: auto; aspect-ratio: 1.15; }
+  .gallery-secondary .image-frame { height: auto; aspect-ratio: 1.35; }
+  .image-note { margin: 20px; font-size: 12px; }
+  .campaigns { background: var(--macsi-sand); padding: 100px 0 120px; }
+  .campaign-track { width: calc(100% + 20px); padding-right: 20px; }
+  .campaign-card, .campaign-card:nth-child(2n), .campaign-card:hover { background: transparent; padding: 30px 15px 0 0; flex-basis: 86%; min-height: 550px; border-top: 1px solid #07594f50; }
+  .campaign-top { align-items: center; }
+  .campaign-top > span:last-child { font-size: 66px; letter-spacing: -.06em; }
+  .campaign-symbol { font-size: 80px; margin: 38px 0; }
+  .campaign-card h3 { font-size: 34px; }
+  .campaign-card p { font-size: 16px; line-height: 1.8; }
+  .voices { padding: 145px 0; }
+  .quote-layout { display: block; margin-top: 90px; }
+  .quote-mark { font-size: 150px; height: 120px; display: flex; align-items: center; justify-content: space-between; }
+  .quote-stage { min-height: 370px; margin-top: 35px; }
+  .quote-stage blockquote { font-size: 32px; line-height: 1.35; }
+  .quote-nav { margin-top: 42px; }
+  .quote-nav button { font-size: 11px; }
+  .support { padding: 105px 0 0; }
+  .support-grid { grid-template-columns: 1fr; gap: 90px; }
+  .donation-panel { width: 100vw; margin-left: calc(50% - 50vw); padding: 65px 24px; background: var(--macsi-sand); }
+  .donation-panel h3 { font-size: 36px; }
+  .closing { padding: 155px 0; }
+  .closing h2 { font-size: clamp(2.2rem, 11.2vw, 5rem); line-height: 1; margin: 45px 0 55px; }
+  .closing-star { right: 0; bottom: -75px; font-size: 80px; }
+  .footer { padding-top: 80px; }
+}

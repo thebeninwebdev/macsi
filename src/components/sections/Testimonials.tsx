@@ -1,91 +1,131 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-
-const testimonials = [
-  {
-    quote:
-      "This is really great and highly commendable. God bless and reward exceedingly your good efforts",
-  },
-  {
-    quote:
-      "I will ask all my friends to contribute towards this noble cause. I have seen the impact of your work in my community and it is truly heartwarming.",
-  },
-  {
-    quote:
-      "Impressive work! These are our leaders of tomorrow and the future of the country.",
-  },
-  {
-    quote:
-      "I am amazed by the impact of this initiative. this is about giving children hope and a sense of belonging.",
-  },
+﻿"use client";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { UserRound } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { MaskReveal, ease } from "../ui/reveal";
+import { DonateButton } from "../ui/donate-button";
+// Update each person's name, title, and photo below.
+// Place photos in public/images and use a path such as /images/jane.jpg.
+// An empty photo displays a placeholder until you add their picture.
+const quoteText = [
+  "This is a wonderful initiative i would love to collaborate on this initiative and i will also ask my friends to contribute towards it.",
+  "I have seen how well Child Smile Initiative manages donations and directs them to those who truly need help. Well done!",
+  "Impressive work! I really love this initiative.",
+  "I am amazed by the impact of this initiative.",
+  "This is really great and highly commendable, God bless and reward you exceedingly.",
+  "Wow! Wow! Wow!!. Beautiful children. God's inheritance. May they be blessed. May you be highly blessed too."
 ];
-
+const quotes = [
+  { text: quoteText[0], name: "Jennifer", title: "Sponsor", photo: "/sponsors/jennifer.jpeg" },
+  { text: quoteText[1], name: "Engr. (Mrs) Onosetale", title: "Convener The Outlok Initiative", photo: "/sponsors/onosetale.jpeg" },
+  { text: quoteText[2], name: "Aimuemwosa", title: "Sponsor", photo: "/sponsors/aimuemwosa.jpeg" },
+  { text: quoteText[3], name: "Anonymous", title: "Sponsor", photo: "" },
+  { text: quoteText[4], name: "Anonymous", title: "Sponsor", photo: "" },
+  { text: quoteText[5], name: "Anonymous", title: "Sponsor", photo: "" },
+];
 export function Testimonials() {
+  const [index, setIndex] = useState(0);
+  const start = useRef(0);
+  const reduced = useReducedMotion();
+  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const autoplay = !paused && !hovered && !focused && !reduced;
+
+  useEffect(() => {
+    if (!autoplay) return;
+    const timer = window.setTimeout(() => {
+      setIndex((current) => (current + 1) % quotes.length);
+    }, 6000);
+    return () => window.clearTimeout(timer);
+  }, [index, autoplay]);
+
   return (
-    <section id="testimonials" className="py-24 sm:py-32 bg-earth-50 relative overflow-hidden">
-      {/* Background texture */}
-      <div className="absolute inset-0 opacity-[0.03]">
+    <section id="voices" className="section voices">
+      <div className="container">
+        <p className="eyebrow">07 / Our community</p>
+        <h2>
+          <MaskReveal>Words from the heart.</MaskReveal>
+        </h2>
         <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23000000' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E")`,
+          className="quote-layout"
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          onFocusCapture={() => setFocused(true)}
+          onBlurCapture={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false);
           }}
-        />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <SectionHeading
-          label="Voices"
-          title="Words From the Heart"
-          subtitle="Those who have witnessed and experienced the impact of a simple uniform."
-          className="mb-16 sm:mb-20"
-        />
-
-        <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard
-              key={testimonial.quote}
-              testimonial={testimonial}
-              index={index}
-            />
-          ))}
+          onTouchStart={(e) => {
+            start.current = e.touches[0].clientX;
+          }}
+          onTouchEnd={(e) => {
+            const delta = start.current - e.changedTouches[0].clientX;
+            if (Math.abs(delta) > 45)
+              setIndex(
+                (index + (delta > 0 ? 1 : quotes.length - 1)) % quotes.length,
+              );
+          }}
+        >
+          <div className="quote-mark" aria-hidden="true">
+            “<small>0{index + 1} / {String(quotes.length).padStart(2, "0")}</small>
+          </div>
+          <div>
+            <div className="quote-stage" aria-live={autoplay ? "off" : "polite"} aria-atomic="true">
+              <AnimatePresence mode="wait">
+                <motion.figure
+                  key={index}
+                  initial={{ opacity: 0, y: reduced ? 0 : 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: reduced ? 0 : -15 }}
+                  transition={{ duration: reduced ? 0 : 0.3, ease }}
+                >
+                  <blockquote>{quotes[index].text}</blockquote>
+                  <figcaption className="quote-author">
+                    <div className="quote-avatar">
+                      {quotes[index].photo ? (
+                        <Image
+                          src={quotes[index].photo}
+                          alt={`Portrait of ${quotes[index].name}`}
+                          fill
+                          sizes="64px"
+                        />
+                      ) : (
+                        <UserRound size={28} aria-hidden="true" />
+                      )}
+                    </div>
+                    <div className="quote-author-details">
+                      <span className="quote-author-name">{quotes[index].name}</span>
+                      <span className="quote-author-title">{quotes[index].title}</span>
+                    </div>
+                  </figcaption>
+                </motion.figure>
+              </AnimatePresence>
+            </div>
+            <div className="quote-nav" aria-label="Choose a testimonial">
+              {quotes.map((_, i) => (
+                <button
+                  key={i}
+                  aria-label={`Testimonial ${i + 1}`}
+                  aria-pressed={i === index}
+                  onClick={() => setIndex(i)}
+                >
+                  0{i + 1}
+                </button>
+              ))}
+                <button
+                  className="quote-autoplay"
+                  type="button"
+                  aria-label={paused ? "Resume automatic testimonials" : "Pause automatic testimonials"}
+                  onClick={() => setPaused((current) => !current)}
+                >
+                  {paused ? "Play" : "Pause"}
+                </button>
+            </div>
+            <DonateButton location="testimonials" variant="secondary" className="voices-donate" label="Support the next child" />
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function TestimonialCard({
-  testimonial,
-  index,
-}: {
-  testimonial: (typeof testimonials)[0];
-  index: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.8, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -4 }}
-      className="group relative bg-white rounded-3xl p-8 sm:p-10 shadow-sm hover:shadow-xl transition-all duration-500 border border-earth-100/50"
-    >
-      {/* Quote Icon */}
-      <div className="w-12 h-12 rounded-full bg-cream-100 flex items-center justify-center mb-6 group-hover:bg-earth-100 transition-colors">
-        <Quote className="w-5 h-5 text-earth-600" />
-      </div>
-
-      {/* Quote Text */}
-      <blockquote className="text-lg sm:text-xl text-gray-700 leading-relaxed font-light">
-        &ldquo;{testimonial.quote}&rdquo;
-      </blockquote>
-
-      {/* Decorative corner */}
-      <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-cream-100/50 to-transparent rounded-tl-3xl rounded-br-3xl pointer-events-none" />
-    </motion.div>
   );
 }

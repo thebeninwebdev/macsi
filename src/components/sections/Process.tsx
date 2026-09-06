@@ -1,180 +1,181 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Ruler, Scissors, Package, Truck, Smile } from "lucide-react";
-import { FadeIn } from "@/components/animations/FadeIn";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-
-const steps = [
+﻿"use client";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Pause, Play } from "lucide-react";
+import { MaskReveal } from "../ui/reveal";
+const campaigns = [
   {
-    icon: Ruler,
-    title: "Measurements",
-    description:
-      "Our team visits schools to carefully measure each child, ensuring every uniform fits perfectly and comfortably.",
-    color: "bg-blue-50",
-    iconColor: "text-blue-600",
+    title: "School measurements",
+    body: "Our team visits partner schools and records each child's size with care.",
   },
   {
-    icon: Scissors,
-    title: "Sewing",
-    description:
-      "Skilled local tailors craft each uniform with precision and care, using durable, high-quality fabrics.",
-    color: "bg-amber-50",
-    iconColor: "text-amber-600",
+    title: "Local tailoring",
+    body: "Skilled tailors sew durable uniforms that can handle everyday school life.",
   },
   {
-    icon: Package,
-    title: "Packaging",
-    description:
-      "Every uniform is neatly folded, labeled with the child's name, and prepared with love for the special day.",
-    color: "bg-green-50",
-    iconColor: "text-green-600",
+    title: "Named packages",
+    body: "Uniforms are labelled, checked, and prepared for each pupil before delivery.",
   },
   {
-    icon: Truck,
-    title: "Distribution",
-    description:
-      "We travel to schools across Lagos, Ogun, and Oyo States, delivering uniforms directly into the hands of children.",
-    color: "bg-purple-50",
-    iconColor: "text-purple-600",
+    title: "Distribution days",
+    body: "We return to schools with volunteers, teachers, and families ready to celebrate.",
   },
   {
-    icon: Smile,
-    title: "Smiles",
-    description:
-      "The best part—watching a child's face light up as they wear their new uniform for the very first time.",
-    color: "bg-rose-50",
-    iconColor: "text-rose-600",
+    title: "Smiles that last",
+    body: "The final campaign result is a child who feels seen, included, and ready to learn.",
   },
 ];
-
 export function Process() {
+  const ref = useRef<HTMLDivElement>(null);
+  const drag = useRef({ x: 0, scroll: 0, active: false, moved: false });
+  const [position, setPosition] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [touching, setTouching] = useState(false);
+  const reduced = useReducedMotion();
+  const move = useCallback((direction: number) => {
+    const el = ref.current;
+    if (!el) return;
+    const card = el.querySelector("article");
+    const end = el.scrollWidth - el.clientWidth;
+    const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
+    const step = (card?.getBoundingClientRect().width || 350) + gap;
+    const left = direction > 0 && el.scrollLeft >= end - 2
+      ? 0
+      : direction < 0 && el.scrollLeft <= 2
+        ? end
+        : Math.max(0, Math.min(end, el.scrollLeft + direction * step));
+    el.scrollTo({
+      left,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    });
+  }, []);
+  useEffect(() => {
+    if (paused || hovered || focused || touching || reduced) return;
+    const timer = window.setTimeout(() => move(1), 6000);
+    return () => window.clearTimeout(timer);
+  }, [position, paused, hovered, focused, touching, reduced, move]);
   return (
-    <section id="process" className="py-24 sm:py-32 bg-white relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-earth-100/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-cream-200/50 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <SectionHeading
-          label="How It Works"
-          title="From Fabric to Smile"
-          subtitle="A journey of care, craftsmanship, and compassion—every step matters."
-          className="mb-20 sm:mb-28"
-        />
-
-        {/* Desktop: Horizontal Timeline */}
-        <div className="hidden lg:block">
-          <div className="relative">
-            {/* Connecting line */}
-            <div className="absolute top-[60px] left-[10%] right-[10%] h-0.5 bg-earth-200">
-              <motion.div
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 2, ease: "easeInOut" }}
-                className="h-full bg-earth-400 origin-left"
-              />
-            </div>
-
-            <div className="grid grid-cols-5 gap-8">
-              {steps.map((step, index) => (
-                <ProcessCard key={step.title} step={step} index={index} />
-              ))}
+    <section id="process" className="section campaigns"
+      onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setFocused(false); }}
+      onTouchStart={() => setTouching(true)} onTouchEnd={() => setTouching(false)}
+      onTouchCancel={() => setTouching(false)}>
+      <div className="container">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">06 / Turn care into action</p>
+            <h2>
+              <MaskReveal>Current campaigns.</MaskReveal>
+            </h2>
+          </div>
+          <div className="heading-aside">
+            <p>
+              The work is practical, local, and visible. Here is how a donation
+              becomes a uniform a child can wear.
+            </p>
+            <div className="slider-controls">
+              <button
+                aria-label="Previous campaign"
+                onClick={() => move(-1)}
+              >
+                <ArrowLeft />
+              </button>
+              <button
+                aria-label="Next campaign"
+                onClick={() => move(1)}
+              >
+                <ArrowRight />
+              </button>
+              <button className="campaign-autoplay" type="button"
+                aria-label={paused ? "Resume automatic campaigns" : "Pause automatic campaigns"}
+                onClick={() => setPaused((current) => !current)}>
+                {paused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
+              </button>
             </div>
           </div>
         </div>
-
-        {/* Mobile: Vertical Timeline */}
-        <div className="lg:hidden space-y-8">
-          {steps.map((step, index) => (
-            <MobileProcessCard key={step.title} step={step} index={index} />
+        <div
+          ref={ref}
+          className="campaign-track"
+          tabIndex={0}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Current campaigns"
+          onScroll={() => {
+            const el = ref.current;
+            if (el)
+              setPosition(
+                el.scrollWidth > el.clientWidth
+                  ? Math.max(0, Math.min(100, (el.scrollLeft / (el.scrollWidth - el.clientWidth)) * 100))
+                  : 0,
+              );
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+              e.preventDefault();
+              move(e.key === "ArrowRight" ? 1 : -1);
+            }
+          }}
+          onPointerDown={(e) => {
+            if (
+              e.pointerType !== "mouse" ||
+              (e.target as HTMLElement).closest("a")
+            )
+              return;
+            drag.current = {
+              x: e.clientX,
+              scroll: e.currentTarget.scrollLeft,
+              active: true,
+              moved: false,
+            };
+            e.currentTarget.setPointerCapture(e.pointerId);
+          }}
+          onPointerMove={(e) => {
+            if (!drag.current.active) return;
+            const delta = e.clientX - drag.current.x;
+            if (Math.abs(delta) > 4) {
+              drag.current.moved = true;
+              e.currentTarget.classList.add("dragging");
+              e.currentTarget.scrollLeft = drag.current.scroll - delta;
+            }
+          }}
+          onPointerUp={(e) => {
+            drag.current.active = false;
+            e.currentTarget.classList.remove("dragging");
+          }}
+          onPointerCancel={(e) => {
+            drag.current.active = false;
+            e.currentTarget.classList.remove("dragging");
+          }}
+        >
+          {campaigns.map((item, i) => (
+            <article
+              className="campaign-card"
+              key={item.title}
+              aria-label={`${i + 1} of ${campaigns.length}`}
+            >
+              <div className="campaign-top">
+                <span>UNIFORM OUTREACH</span>
+                <span>0{i + 1}</span>
+              </div>
+              <span className="campaign-symbol" aria-hidden="true">
+                {["↗", "✳", "⊞", "→", "☺"][i]}
+              </span>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+              <a className="campaign-link" href="#how-it-works">See how it works <ArrowUpRight size={20} aria-hidden="true" /></a>
+            </article>
           ))}
+        </div>
+        <div className="track-progress" aria-hidden="true">
+          <span style={{ transform: `translateX(${position * 2}%)` }} />
         </div>
       </div>
     </section>
-  );
-}
-
-function ProcessCard({
-  step,
-  index,
-}: {
-  step: (typeof steps)[0];
-  index: number;
-}) {
-  const Icon = step.icon;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8, delay: index * 0.2, ease: [0.16, 1, 0.3, 1] }}
-      className="flex flex-col items-center text-center"
-    >
-      {/* Icon Circle */}
-      <motion.div
-        whileHover={{ scale: 1.1, rotate: 5 }}
-        className={`w-[120px] h-[120px] rounded-full ${step.color} flex items-center justify-center mb-8 shadow-lg shadow-black/5`}
-      >
-        <Icon className={`w-10 h-10 ${step.iconColor}`} />
-      </motion.div>
-
-      {/* Step Number */}
-      <span className="text-xs font-semibold tracking-[0.2em] uppercase text-earth-400 mb-3">
-        Step {String(index + 1).padStart(2, "0")}
-      </span>
-
-      {/* Title */}
-      <h3 className="font-serif text-2xl font-bold text-black mb-3">
-        {step.title}
-      </h3>
-
-      {/* Description */}
-      <p className="text-sm text-gray-600 leading-relaxed max-w-[200px]">
-        {step.description}
-      </p>
-    </motion.div>
-  );
-}
-
-function MobileProcessCard({
-  step,
-  index,
-}: {
-  step: (typeof steps)[0];
-  index: number;
-}) {
-  const Icon = step.icon;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -30 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="flex gap-5 items-start"
-    >
-      <div className="flex flex-col items-center">
-        <div className={`w-16 h-16 rounded-full ${step.color} flex items-center justify-center shrink-0 shadow-md`}>
-          <Icon className={`w-7 h-7 ${step.iconColor}`} />
-        </div>
-        {index < steps.length - 1 && (
-          <div className="w-0.5 h-12 bg-earth-200 mt-2" />
-        )}
-      </div>
-      <div className="pt-2">
-        <span className="text-xs font-semibold tracking-[0.2em] uppercase text-earth-400 mb-1 block">
-          Step {String(index + 1).padStart(2, "0")}
-        </span>
-        <h3 className="font-serif text-xl font-bold text-black mb-2">
-          {step.title}
-        </h3>
-        <p className="text-sm text-gray-600 leading-relaxed">
-          {step.description}
-        </p>
-      </div>
-    </motion.div>
   );
 }

@@ -1,146 +1,135 @@
 "use client";
-
-import { motion } from "framer-motion";
-import { ChevronDown, Heart } from "lucide-react";
+import { useRef } from "react";
 import Image from "next/image";
-
-export function Hero() {
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { photos } from "@/lib/photos";
+import { DonateButton } from "../ui/donate-button";
+import { ease } from "../ui/reveal";
+function HeroPhoto({
+  src,
+  side,
+  alt,
+}: {
+  src: typeof photos.main | string;
+  side: number;
+  alt: string;
+}) {
+  const reduced = useReducedMotion();
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 900], [0, side === 0 ? -30 : -65]);
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Background Image with Ken Burns */}
-      <motion.div
-        initial={{ scale: 1 }}
-        animate={{ scale: 1.08 }}
-        transition={{ duration: 20, ease: "linear" }}
-        className="absolute inset-0"
+    <motion.div
+      className={`hero-photo-wrap photo-${side}`}
+      style={{ y: reduced ? 0 : y }}
+    >
+      <motion.figure
+        initial={
+          reduced
+            ? false
+            : { opacity: 0, y: 100, scale: 0.94, rotate: side * 11 }
+        }
+        animate={{ opacity: 1, y: 0, scale: 1, rotate: side * 7 }}
+        transition={{
+          duration: reduced ? 0 : 1.1,
+          delay: reduced ? 0 : 0.65 + (side + 1) * 0.12,
+          ease,
+        }}
       >
         <Image
-          src="https://images.unsplash.com/photo-1617056239820-8ce90ba48193?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt="Children in school uniforms smiling"
+          src={src}
+          alt={alt}
           fill
-          priority
-          className="object-cover object-bottom"
-          sizes="100vw"
+          priority={side === 0}
+          sizes={
+            side === 0
+              ? "(max-width: 700px) 74vw, 48vw"
+              : "(max-width: 700px) 35vw, 26vw"
+          }
         />
-      </motion.div>
-
-      {/* Dark Overlay with gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80" />
-      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-black/40" />
-
-      {/* Floating particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-white/5 blur-2xl"
-            style={{
-              width: `${150 + i * 80}px`,
-              height: `${150 + i * 80}px`,
-              left: `${10 + i * 18}%`,
-              top: `${15 + (i % 3) * 25}%`,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 15, 0],
-              opacity: [0.3, 0.6, 0.3],
-            }}
-            transition={{
-              duration: 8 + i * 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 1.5,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-5 pt-24 pb-16 text-center sm:px-6 sm:pt-0 sm:pb-0">
-        <div className="max-w-5xl mx-auto">
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-2 mb-5 backdrop-blur-md sm:px-5 sm:py-2.5 sm:mb-8"
-          >
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500" />
-            </span>
-            <span className="text-white/90 text-xs font-medium tracking-wide sm:text-sm">
-              Active in Edo State
-            </span>
-          </motion.div>
-
-          {/* Main Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl text-white leading-[1.08] tracking-tight sm:leading-[1.05]"
-          >
-            Every Child Deserves
-            <br />
-            <span className="text-cream-200">To Learn With Dignity</span>
-          </motion.h1>
-
-          {/* Subheading */}
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="mt-5 text-base sm:mt-8 sm:text-xl md:text-2xl text-white/70 max-w-2xl mx-auto leading-relaxed font-light"
-          >
-            Make A Child Smile Initiative provides school uniforms for children
-            in public schools with the help of caring supporters.
-          </motion.p>
-
-          {/* Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.1 }}
-            className="mt-8 flex flex-col sm:mt-12 sm:flex-row gap-3 sm:gap-4 justify-center items-center"
-          >
-            <a
-              href="#support"
-              className="group inline-flex items-center gap-3 px-7 py-3 bg-white text-black rounded-full text-base font-medium hover:bg-cream-100 transition-all duration-300 hover:shadow-lg hover:shadow-white/10 hover:-translate-y-0.5 sm:px-10 sm:py-4 sm:text-lg"
-            >
-              <Heart className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              Support A Child
-            </a>
-            <a
-              href="#impact"
-              className="inline-flex items-center gap-2 px-7 py-3 border-2 border-white/30 text-white rounded-full text-base font-medium hover:bg-white/10 hover:border-white/50 transition-all duration-300 backdrop-blur-sm sm:px-10 sm:py-4 sm:text-lg"
-            >
-              View Our Impact
-            </a>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3"
-      >
-        <span className="text-white/50 text-xs tracking-[0.3em] uppercase">
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      </motion.figure>
+    </motion.div>
+  );
+}
+export function Hero() {
+  const reduced = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  return (
+    <section className="hero" id="home" ref={ref}>
+      <div className="container hero-inner">
+        <motion.p
+          className="eyebrow"
+          initial={reduced ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
         >
-          <ChevronDown className="w-6 h-6 text-white/50" />
-        </motion.div>
-      </motion.div>
-
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-cream-50 to-transparent z-10" />
+          Make a Child Smile Initiative
+        </motion.p>
+        <h1 aria-label="School dignity starts with one uniform.">
+          {["SCHOOL DIGNITY", "STARTS WITH", "ONE UNIFORM."].map((line, i) => (
+            <span className="mask hero-line" key={line} aria-hidden="true">
+              {Array.from(line).map((letter, j) => <motion.span key={j} className="hero-letter"
+                initial={reduced ? false : { y: "110%", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{
+                  duration: reduced ? 0 : 0.9,
+                  delay: reduced ? 0 : 0.3 + i * 0.1 + j * 0.012,
+                  ease,
+                }}
+              >
+                {letter === " " ? " " : letter}
+              </motion.span>)}
+            </span>
+          ))}
+        </h1>
+        <div className="hero-intro">
+          <p>We provide school uniforms to children who cannot afford them, made by local tailors in their own communities.</p>
+          <div className="hero-actions">
+            <DonateButton location="hero" label="Donate a uniform" />
+            <a className="text-link" href="#how-it-works">See how it works <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div className="hero-composition">
+          <HeroPhoto
+            src={photos.left}
+            side={-1}
+            alt="Temporary photograph: books and an apple on a desk"
+          />
+          <HeroPhoto
+            src={photos.main}
+            side={0}
+            alt="Children gathered outside a school"
+          />
+          <HeroPhoto
+            src={photos.right}
+            side={1}
+            alt="Temporary photograph: a classroom"
+          />
+          <span className="hero-flower" aria-hidden="true">
+            ✳
+          </span>
+        </div>
+        <motion.figure className="hero-mobile-photo"
+          initial={reduced ? false : { clipPath: "inset(0 0 100% 0)", scale: 1.08 }}
+          animate={{ clipPath: "inset(0 0 0 0)", scale: 1 }}
+          transition={{ duration: reduced ? 0 : 1.2, delay: reduced ? 0 : 0.5, ease }}>
+          <Image src={photos.main} alt="Pupils wearing their school uniforms outside a classroom" fill priority sizes="100vw" />
+        </motion.figure>
+        
+      </div>
+      <svg
+        className="hero-curve"
+        viewBox="0 0 1440 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path d="M0 0 Q720 180 1440 0 V100 H0Z" />
+      </svg>
     </section>
   );
 }
+

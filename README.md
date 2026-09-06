@@ -1,50 +1,37 @@
-# Make A Child Smile Initiative
+﻿# Make A Child Smile Initiative
 
-A modern, emotional, cinematic NGO website for an initiative focused on providing school uniforms for students in public primary schools in Nigeria.
+The existing Next.js 14 App Router homepage, redesigned around school uniforms, dignity, and confidence. Uses Manrope, Framer Motion, and a green/cream/gold palette.
 
-## Features
+## Development
 
-- **Cinematic Hero Section** with Ken Burns effect and floating particles
-- **Emotional Storytelling** with alternating layouts and parallax images
-- **Animated Impact Statistics** with count-up animations
-- **Masonry Photo Gallery** with hover effects
-- **Horizontal Process Timeline** with animated cards
-- **Testimonial Cards** with elegant typography
-- **WhatsApp Support CTA** with glowing effects
-- **Sticky Navigation** with scroll-aware styling
-- **Fully Responsive** mobile-first design
-- **SEO Optimized** with Next.js metadata
-- **Smooth Animations** powered by Framer Motion
+Run `npm install`, then `npm run dev`. On Windows PowerShell with script execution disabled, use `npm.cmd`.
 
-## Tech Stack
+Validation: `npx tsc --noEmit`, `npm run lint`, and `npm run build`. Google Fonts access is needed for the first font download.
 
-- Next.js 14
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-- Lucide React
+## Content and assets
 
-## Getting Started
+- `src/lib/photos.ts` maps all page photographs.
+- `src/app/image.webp` is the original school photograph.
+- `public/images/placeholder-*.jpg` are approved temporary Unsplash images. Replace them with MACSI photographs. Source IDs: `1503676260728-1c00da094a0b`, `1509062522246-3755977927d7`, `1497486751825-1233686d5d80`.
+- `src/app/logo.png` is the existing legacy logo. The new green MACSI logo was not present in this checkout; replace this asset when available.
+- `src/lib/donations.ts` is the shared source for the existing uniform cost (NGN 4,500), donation presets, WhatsApp destination, contact details, impact counts and next-semester target. Preset amounts and messages are derived from the uniform cost.
+- `src/components/sections/gallery.tsx` holds the five MACSI gallery photographs and captions. Add entries there to grow the gallery.
+- The donation FAQ describes the existing WhatsApp process and local uniform production. It does not claim a payment provider, registration status or allocation percentages.
 
-```bash
-npm install
-npm run dev
-```
+## Interactions
 
-Open [http://localhost:3000](http://localhost:3000) to view the site.
+Masked heading entrances, layered photo parallax, CSS marquee, rolling digit counters, image reveals, draggable/keyboard-accessible campaign carousel, swipeable testimonials, accessible mobile menu, and scroll-driven closing text. Reduced-motion settings disable continuous motion and show closing text immediately.
 
-## Build
+Donations retain the existing WhatsApp links to `2348078675919`. There is no checkout or payment backend in this project. The buttons open WhatsApp; they do not process payments or send messages automatically.
 
-```bash
-npm run build
-```
+## Donation journey
 
-## Design Philosophy
+`DonateButton` is shared by navigation, hero, story decision points and footer. It links to `/#support` and focuses the donation choices on the homepage. Use `location` for consistent `data-cta="donate"` / `data-location` attributes; no analytics provider is installed.
 
-- Documentary-style storytelling
-- Cinematic layouts
-- Emotional photography-focused design
-- Large typography
-- African warmth and authenticity
-- Premium black, cream, white, and warm earthy color palette
-"# macsi" 
+`PersistentDonate` uses observers to display a desktop floating button or compact mobile bar after the visitor passes the introduction. It hides while the hero donation button, support section or footer donation button is visible, while the mobile menu is open, and while a form field is focused. The mobile bar includes safe-area padding and the page reserves bottom space.
+
+The homepage explains the mission, how donations work, local tailoring, real gallery photos, impact, campaigns, testimonials and qualitative transparency before the WhatsApp donation choices. The 500-uniform next-semester target is presented as a goal, separately from the existing 100+ children supported.
+
+Browser checks for these journeys are in `.review/donation-journey.cjs` (uses the local Playwright installation and preview at port 3101).
+
+Development output uses .next-dev; production builds use .next-production, so preview and build processes can run independently.

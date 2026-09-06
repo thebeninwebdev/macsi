@@ -1,21 +1,20 @@
-import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+﻿import type { Metadata } from "next";
+import { Manrope } from "next/font/google";
 import "./globals.css";
+import "./mobile.css";
+import "./local-tailors.css";
+import "./donation-journey.css";
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-manrope",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Make A Child Smile Initiative | School Uniforms for Nigerian Children",
+  title:
+    "Make A Child Smile Initiative | School Uniforms for Nigerian Children",
   description:
     "Make A Child Smile Initiative provides school uniforms for children in public primary schools across Nigeria. Join us in giving every child the dignity to learn.",
   keywords: [
@@ -28,7 +27,8 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Make A Child Smile Initiative",
-    description: "Providing school uniforms for children in public primary schools across Nigeria.",
+    description:
+      "Providing school uniforms for children in public primary schools across Nigeria.",
     type: "website",
     locale: "en_NG",
   },
@@ -40,11 +40,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} scroll-smooth`}>
-      <body className="font-sans antialiased bg-cream-50 text-black">
-        <div className="min-h-screen w-full overflow-x-hidden">
-          {children}
-        </div>
+    <html lang="en" className={`${manrope.variable} scroll-smooth`}>
+      <body className="font-sans antialiased">
+        <div className="min-h-screen w-full">{children}</div>
       </body>
     </html>
   );

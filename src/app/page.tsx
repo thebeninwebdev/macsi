@@ -1,25 +1,38 @@
-import { Navigation } from "@/components/sections/Navigation";
-import { Hero } from "@/components/sections/Hero";
-import { Story } from "@/components/sections/Story";
-import { Impact } from "@/components/sections/Impact";
-import { Gallery } from "@/components/sections/Gallery";
-import { Process } from "@/components/sections/Process";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { Support } from "@/components/sections/Support";
-import { Footer } from "@/components/sections/Footer";
-
+﻿import { Navbar } from "@/components/sections/navbar";
+import { Hero } from "@/components/sections/hero";
+import { MarqueeStrip } from "@/components/sections/marquee-strip";
+import { Story } from "@/components/sections/story";
+import { LocalTailors } from "@/components/sections/local-tailors";
+import { ImpactStats } from "@/components/sections/impact-stats";
+import { Gallery } from "@/components/sections/gallery";
+import { Process } from "@/components/sections/process";
+import { Testimonials } from "@/components/sections/testimonials";
+import { SupportCta } from "@/components/sections/support-cta";
+import { Closing } from "@/components/sections/closing";
+import { Footer } from "@/components/sections/footer";
+import { HowItWorks } from "@/components/sections/how-it-works";
+import { Transparency } from "@/components/sections/transparency";
+import { PersistentDonate } from "@/components/ui/persistent-donate";
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <Navigation />
-      <Hero />
-      <Story />
-      <Impact />
-      <Gallery />
-      <Process />
-      <Testimonials />
-      <Support />
+    <>
+      <Navbar />
+      <main id="main-content">
+        <Hero />
+        <MarqueeStrip />
+        <Story />
+        <HowItWorks />
+        <LocalTailors />
+        <Gallery />
+        <ImpactStats />
+        <Process />
+        <Testimonials />
+        <Transparency />
+        <SupportCta />
+        <Closing />
+      </main>
       <Footer />
-    </main>
+      <PersistentDonate />
+    </>
   );
 }

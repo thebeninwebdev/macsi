@@ -11,3 +11,8 @@ pnpm-debug.log*
 
 *.tsbuildinfo
 next-env.d.ts
+
+.review/
+
+.next-dev/
+.next-production/

@@ -1,14 +1,8 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+﻿const { PHASE_DEVELOPMENT_SERVER } = require('next/constants');
+/** Keep the preview and production compiler outputs independent. */
+module.exports = (phase) => ({
+  distDir: phase === PHASE_DEVELOPMENT_SERVER ? '.next-dev' : '.next-production',
   images: {
-    domains: ['images.unsplash.com', 'kimi-web-img.moonshot.cn'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
+    remotePatterns: [{ protocol: 'https', hostname: '**' }],
   },
-}
-
-module.exports = nextConfig
+});
